@@ -1,0 +1,27 @@
+.App {
+  text-align: center;
+  padding: 40px;
+}
+
+.App h1 {
+  color: red;
+}
+.app-container {
+  display: flex;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f2f2f2;
+  height: 100vh;
+}
+
+.main-section {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.main-content {
+  padding: 20px;
+  background-color: #f2f2f2;
+  flex-grow: 1;
+}

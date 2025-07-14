@@ -1,0 +1,32 @@
+.dashboard-container {
+  display: flex;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+  margin-left: 0;
+}
+
+.main-content.shifted {
+  margin-left: 220px;
+}
+.navbar {
+  background-color: #ffffff;
+  padding: 10px 20px;
+  border-bottom: 1px solid #1b10c2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 40px;
+   margin-right: 25px;
+}
+
+.nav-links span {
+  margin-right: 35px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #1e109e;
+}
+
