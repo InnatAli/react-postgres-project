@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import Sidebar from '../components/Sidebar';
 import './Dashboard.css';
 import './TransportList.css';
+import UserAvatar from '../components/Avatar';
+import ChangePasswordModal from '../components/ChangePasswordModal';
 import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
   const [pendingEvents, setPendingEvents] = useState([]);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
-
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+const userName = localStorage.getItem('userName');
   // Fetch all pending events
   const fetchPendingEvents = async () => {
     try {
@@ -51,14 +52,21 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard-container">
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
 
-      <div className={`main-content ${isSidebarOpen ? 'shifted' : ''}`}>
+      <div className= "main-content">
         <div className="navbar">
           <div className="nav-links">
             <span onClick={() => navigate('/admindashboard')}>Dashboard</span>
             <span onClick={() => navigate('/dashboard')}>Events</span>
-             <span onClick={() => navigate('/aboutus')}>About</span>
+            <span onClick={() => window.location.href='/events/new'}>Create New Event</span>  
+          <span onClick={() => navigate('/adminusers')}>Manage Admins</span>
+          <span onClick={() => navigate('/adminbookings')}>Manage Booking</span> 
+            <span onClick={() => navigate('/aboutus')}>About</span>
+             <span className="avatar-container"><UserAvatar onLogout={() => { localStorage.removeItem('token'); window.location.href = '/login';
+  }}
+  onChangePassword={() => setShowPasswordModal(true)}
+/>
+<ChangePasswordModal open={showPasswordModal} onClose={() => setShowPasswordModal(false)} /></span> 
           </div>
         </div>
 

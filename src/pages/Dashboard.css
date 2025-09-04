@@ -21,6 +21,7 @@
   align-items: center;
   margin-left: 40px;
    margin-right: 25px;
+     align-items: center;
 }
 
 .nav-links span {
@@ -29,4 +30,3 @@
   cursor: pointer;
   color: #1e109e;
 }
-

@@ -14,7 +14,6 @@ import About from './pages/About';
 import Contact from './pages/Contact';
 import UserBookingHistoryWrapper from './components/UserBookingHistoryWrapper';
 import AboutUs from './pages/AboutUs';
-import ContactUs from './pages/ContactUs';
 import './index.css';
 import './App.css';
 
@@ -39,7 +38,6 @@ function App() {
         <Route path="/userbookinghistory/:user_id" element={<UserBookingHistoryWrapper />} />
         <Route path="/aboutus" element={<AboutUs />} />
          <Route path="/about" element={<About />} />
-        <Route path="/contactus" element={<ContactUs />} />
       </Routes>
       </div>
   );

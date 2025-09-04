@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import Usersidebar from '../components/Usersidebar'; 
 import { useNavigate } from 'react-router-dom';
+import UserAvatar from '../components/Avatar';
+import ChangePasswordModal from '../components/ChangePasswordModal';
 
 const UserBookingHistory = ({ user_name }) => {
   const [bookings, setBookings] = useState([]);
   const [cancelledBookingIds, setCancelledBookingIds] = useState([]);
   const navigate = useNavigate();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+   const [showPasswordModal, setShowPasswordModal] = useState(false);
+   const userName = localStorage.getItem('userName');
 
   useEffect(() => {
     if (!user_name) return;
+
     const fetchBookings = async () => {
       try {
         const res = await fetch(`http://localhost:5000/api/user/booking/${user_name}`);
@@ -61,14 +64,19 @@ const UserBookingHistory = ({ user_name }) => {
 
   return (
     <div className="dashboard-container">
-      <Usersidebar isOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
 
-      <div className={`main-content ${isSidebarOpen ? 'shifted' : ''}`}>
+      <div className= "main-content">
         <div className="navbar">
           <div className="nav-links">
-            <span onClick={() => navigate('/userdashboard')}>Events</span>
+         <span onClick={() => navigate('/userdashboard')}>Events</span>
+            <span onClick={() => navigate('/userbookinghistory/1')}>My History</span>
             <span onClick={() => navigate('/contact')}>Contact Us</span>
             <span onClick={() => navigate('/about')}>About</span>
+            <span className="avatar-container"><UserAvatar onLogout={() => { localStorage.removeItem('token'); window.location.href = '/login';
+  }}
+  onChangePassword={() => setShowPasswordModal(true)}
+/>
+<ChangePasswordModal open={showPasswordModal} onClose={() => setShowPasswordModal(false)} /></span> 
           </div>
         </div>
 
@@ -80,8 +88,7 @@ const UserBookingHistory = ({ user_name }) => {
                 <tr>
                   <th>#</th>
                   <th>Booking ID</th>
-                  <th>Service Type</th>
-                  <th>Service Name</th>
+                  <th>Event Title</th> 
                   <th>Booking Date</th>
                   <th>Action</th>
                 </tr>
@@ -96,8 +103,7 @@ const UserBookingHistory = ({ user_name }) => {
                     <tr key={booking.booking_id}>
                       <td>{i + 1}</td>
                       <td>#{booking.booking_id}</td>
-                      <td>{booking.item_type}</td>
-                      <td>{booking.item_name}</td>
+                      <td>{booking.item_name}</td> 
                       <td>{new Date(booking.booking_date).toLocaleString()}</td>
                       <td>
                         {cancelledBookingIds.includes(booking.booking_id) ? (

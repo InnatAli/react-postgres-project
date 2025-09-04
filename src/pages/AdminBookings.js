@@ -1,6 +1,6 @@
-
 import React, { useEffect, useState } from 'react';
-import AdminSidebar from '../components/Sidebar';
+import UserAvatar from '../components/Avatar';
+import ChangePasswordModal from '../components/ChangePasswordModal';
 import { Tabs, Tab } from '@mui/material'; 
 import { useNavigate } from 'react-router-dom';
 
@@ -8,8 +8,9 @@ const AdminBookings = () => {
   const [bookings, setBookings] = useState([]);
   const [cancelledBookings, setCancelledBookings] = useState([]);
   const [tab, setTab] = useState(0);
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const navigate = useNavigate();
+const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const userName = localStorage.getItem('userName');
 
   useEffect(() => {
     fetchAllBookings();
@@ -80,14 +81,21 @@ const AdminBookings = () => {
 
   return (
     <div className="dashboard-container">
-      <AdminSidebar isOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
 
-      <div className={`main-content ${isSidebarOpen ? 'shifted' : ''}`}>
+      <div className= "main-content">
           <div className="navbar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div className="nav-links">
-             <span onClick={() => navigate('/admindashboard')}>Dashboard</span>
+           <span onClick={() => navigate('/admindashboard')}>Dashboard</span>
             <span onClick={() => navigate('/dashboard')}>Events</span>
+            <span onClick={() => window.location.href='/events/new'}>Create New Event</span>  
+          <span onClick={() => navigate('/adminusers')}>Manage Admins</span>
+          <span onClick={() => navigate('/adminbookings')}>Manage Booking</span> 
             <span onClick={() => navigate('/aboutus')}>About</span>
+             <span className="avatar-container"><UserAvatar onLogout={() => { localStorage.removeItem('token'); window.location.href = '/login';
+  }}
+  onChangePassword={() => setShowPasswordModal(true)}
+/>
+<ChangePasswordModal open={showPasswordModal} onClose={() => setShowPasswordModal(false)} /></span> 
           </div>
         </div>
 

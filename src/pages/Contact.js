@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import './Style.css';
-import Usersidebar from '../components/Usersidebar';
 import { useNavigate } from 'react-router-dom';
+import UserAvatar from '../components/Avatar';
+import ChangePasswordModal from '../components/ChangePasswordModal';
 
 const Contact = () => {
  const navigate = useNavigate();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+ const [showPasswordModal, setShowPasswordModal] = useState(false);
+   const userName = localStorage.getItem('userName');
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -19,20 +22,23 @@ const Contact = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     alert('Message sent successfully!');
-    // You can integrate with backend or email API here
     setFormData({ name: '', email: '', message: '' });
   };
 
   return (
      <div className="dashboard-container">
-      <Usersidebar isOpen={isSidebarOpen} toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />
-
-      <div className={`main-content ${isSidebarOpen ? 'shifted' : ''}`}>
+      <div className= "main-content">
            <div className="navbar" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div className="nav-links">
            <span onClick={() => navigate('/userdashboard')}>Events</span>
+            <span onClick={() => navigate('/userbookinghistory/1')}>My History</span>
             <span onClick={() => navigate('/contact')}>Contact Us</span>
             <span onClick={() => navigate('/about')}>About</span>
+            <span className="avatar-container"><UserAvatar onLogout={() => { localStorage.removeItem('token'); window.location.href = '/login';
+  }}
+  onChangePassword={() => setShowPasswordModal(true)}
+/>
+<ChangePasswordModal open={showPasswordModal} onClose={() => setShowPasswordModal(false)} /></span> 
           </div>
         </div>
         <section className="content">
